@@ -1,0 +1,687 @@
+{
+    "users": [
+        {
+            "id": 1,
+            "username": "Casciper",
+            "password": "0504asdasd"
+        },
+        {
+            "id": 2,
+            "username": "tecntestovenko@yandex.ru",
+            "password": "sfsd987034iouf"
+        }
+    ],
+    "news": [],
+    "characters": [
+        {
+            "id": 1,
+            "name": "Gareth",
+            "parent_id": 1,
+            "image": "https://s3.amazonaws.com/files.motivateapp.com/production/uploads/user/avatar/1/avatar.png",
+            "story": "test story"
+        },
+        {
+            "id": 2,
+            "name": "Arthur",
+            "parent_id": 1,
+            "image": "https://s3.amazonaws.com/files.motivateapp.com/production/uploads/user/avatar/1/avatar.png",
+            "story": "test story"
+        },
+        {
+            "id": 3,
+            "name": "Kay`sa",
+            "parent_id": 1,
+            "image": "https://s3.amazonaws.com/files.motivateapp.com/production/uploads/user/avatar/1/avatar.png",
+            "story": "test story"
+        }
+    ],
+    "races": [
+        {
+            "id": 1,
+            "name": "Аракокра",
+            "code": "arakokra",
+            "stats": {
+                "dexterity": 2,
+                "wisdom": 1
+            },
+            "gender": {
+                "female" : "female"
+            },
+            "class": {
+                "bard": "bard",
+                "barbarian": "barbarian",
+                "warrior": "warrior",
+                "wizard": "wizard",
+                "druid": "druid",
+                "cleric": "cleric",
+                "artificer": "artificer",
+                "warlock": "warlock",
+                "monk": "monk",
+                "paladin": "paladin",
+                "rogue": "rogue",
+                "ranger": "ranger",
+                "sorcerer": "sorcerer"
+            }
+        },
+        {
+            "id": 2,
+            "name": "Аасимар",
+            "code": "aasimar",
+            "stats": {
+                "charisma": 2
+            },
+            "gender": {
+                "male" : "male"
+            }
+        },
+        {
+            "id": 3,
+            "name": "Автогном",
+            "code": "avtognom",
+            "stats": {
+                "counter": 3
+            },
+            "gender": {
+                "male" : "male",
+                "female" : "female"
+            }
+        },
+        {
+            "id": 4,
+            "name": "Астральный эльф",
+            "code": "astralnyy-elf",
+            "stats": {
+                "counter": 3
+            },
+            "gender": {
+                "male" : "male",
+                "female" : "female"
+            }
+        },
+        {
+            "id": 5,
+            "name": "багбир",
+            "code": "bagbir",
+            "stats": {
+                "strength": 2,
+                "dexterity": 1
+            },
+            "gender": {
+                "male" : "male",
+                "female" : "female"
+            }
+        },
+        {
+            "id": 6,
+            "name": "Ведалкен",
+            "code": "vedalken",
+            "stats": {
+                "intelligence": 2,
+                "wisdom": 1
+            },
+            "gender": {
+                "male" : "male",
+                "female" : "female"
+            }
+        },
+        {
+            "id": 7,
+            "name": "Вердан",
+            "code": "verdan",
+            "stats": {
+                "charisma": 2,
+                "constitution": 1
+            },
+            "gender": {
+                "male" : "male",
+                "female" : "female"
+            }
+        },
+        {
+            "id": 8,
+            "name": "Гибрнид симиков",
+            "code": "gibrid-simikov",
+            "stats": {
+                "constitution": 2,
+                "counter": 1
+            },
+            "gender": {
+                "male" : "male",
+                "female" : "female"
+            }
+        },
+        {
+            "id": 9,
+            "name": "Гит",
+            "code": "git",
+            "stats": {
+                "intelligence": 1
+            },
+            "gender": {
+                "male" : "male",
+                "female" : "female"
+            }
+        },
+        {
+            "id": 10,
+            "name": "Гифф",
+            "code": "giff",
+            "stats": {
+                "counter": 3
+            },
+            "gender": {
+                "male" : "male",
+                "female" : "female"
+            }
+        },
+        {
+            "id": 11,
+            "name": "Гном",
+            "code": "gnom",
+            "stats": {
+                "intelligence": 2
+            },
+            "gender": {
+                "male" : "male",
+                "female" : "female"
+            }
+        },
+        {
+            "id": 12,
+            "name": "Гоблин",
+            "code": "goblin",
+            "stats": {
+                "dexterity": 2,
+                "constitution": 1
+            },
+            "gender": {
+                "male" : "male",
+                "female" : "female"
+            }
+        },
+        {
+            "id": 13,
+            "name": "Голиаф",
+            "code": "goliatf",
+            "stats": {
+                "strength": 2,
+                "constitution": 1
+            },
+            "gender": {
+                "male" : "male",
+                "female" : "female"
+            }
+        },
+        {
+            "id": 14,
+            "name": "Грунг",
+            "code": "grung",
+            "stats": {
+                "dexterity": 2,
+                "constitution": 1
+            },
+            "gender": {
+                "male" : "male",
+                "female" : "female"
+            }
+        },
+        {
+            "id": 15,
+            "name": "Дварф",
+            "code": "dvarf",
+            "stats": {
+                "constitution": 2
+            },
+            "gender": {
+                "male" : "male",
+                "female" : "female"
+            }
+        },
+        {
+            "id": 16,
+            "name": "Дженази",
+            "code": "dzenazi",
+            "stats": {
+                "constitution": 2
+            },
+            "gender": {
+                "male" : "male",
+                "female" : "female"
+            }
+        },
+        {
+            "id": 17,
+            "name": "Драконорождённый",
+            "code": "drakonorozhdennyy",
+            "stats": {
+                "strength": 2,
+                "charisma": 1
+            },
+            "gender": {
+                "male" : "male",
+                "female" : "female"
+            }
+        },
+        {
+            "id": 18,
+            "name": "Зайцегон",
+            "code": "zaytsegon",
+            "stats": {
+                "counter": 3
+            },
+            "gender": {
+                "male" : "male",
+                "female" : "female"
+            }
+        },
+        {
+            "id": 19,
+            "name": "Калаштар",
+            "code": "kalashtar",
+            "stats": {
+                "wisdom": 2,
+                "charisma": 1
+            },
+            "gender": {
+                "male" : "male",
+                "female" : "female"
+            }
+        },
+        {
+            "id": 20,
+            "name": "Кендер",
+            "code": "kender",
+            "stats": {
+                "counter": 3
+            },
+            "gender": {
+                "male" : "male",
+                "female" : "female"
+            }
+        },
+        {
+            "id": 21,
+            "name": "Кенку",
+            "code": "kenku",
+            "stats": {
+                "dexterity": 2,
+                "wisdom": 1
+            },
+            "gender": {
+                "male" : "male",
+                "female" : "female"
+            }
+
+        },
+        {
+            "id": 22,
+            "name": "Кентавр",
+            "code": "kentavr",
+            "stats": {
+                "strength": 2,
+                "wisdom": 1
+            },
+            "gender": {
+                "male" : "male",
+                "female" : "female"
+            }
+        },
+        {
+            "id": 23,
+            "name": "Кобольд",
+            "code": "kobold",
+            "stats": {
+                "dexterity": 2
+            },
+            "gender": {
+                "male" : "male",
+                "female" : "female"
+            }
+        },
+        {
+            "id": 24,
+            "name": "Кованный",
+            "code": "kovannyy",
+            "stats": {
+                "constitution": 2,
+                "counter": 1
+            },
+            "gender": {
+                "male" : "male",
+                "female" : "female"
+            }
+        },
+        {
+            "id": 25,
+            "name": "Леонинец",
+            "code": "leoninets",
+            "stats": {
+                "constitution": 2,
+                "strength": 1
+            },
+            "gender": {
+                "male" : "male",
+                "female" : "female"
+            }
+        },
+        {
+            "id": 26,
+            "name": "Локата",
+            "code": "lokata",
+            "stats": {
+                "strength": 2,
+                "dexterity": 1
+            },
+            "gender": {
+                "male" : "male",
+                "female" : "female"
+            }
+        },
+        {
+            "id": 27,
+            "name": "Локсодон",
+            "code": "loksodon",
+            "stats": {
+                "constitution": 2,
+                "wisdom": 1
+            },
+            "gender": {
+                "male" : "male",
+                "female" : "female"
+            }
+        },
+        {
+            "id": 28,
+            "name": "Людоящер",
+            "code": "lyudoyascher",
+            "stats": {
+                "constitution": 2,
+                "wisdom": 1
+            },
+            "gender": {
+                "male" : "male",
+                "female" : "female"
+            }
+        },
+        {
+            "id": 29,
+            "name": "Минотавр",
+            "code": "minotavr",
+            "stats": {
+                "strength": 2,
+                "constitution": 1
+            },
+            "gender": {
+                "male" : "male",
+                "female" : "female"
+            }
+        },
+        {
+            "id": 30,
+            "name": "Орк",
+            "code": "ork",
+            "stats": {
+                "strength": 2,
+                "constitution": 1
+            },
+            "gender": {
+                "male" : "male",
+                "female" : "female"
+            }
+        },
+        {
+            "id": 31,
+            "name": "Плазмоид",
+            "code": "plazmoid",
+            "stats": {
+                "counter": 3
+            },
+            "gender": {
+                "male" : "male",
+                "female" : "female"
+            }
+        },
+        {
+            "id": 32,
+            "name": "Полуорк",
+            "code": "poluork",
+            "stats": {
+                "strength": 2,
+                "constitution": 1
+            },
+            "gender": {
+                "male" : "male",
+                "female" : "female"
+            }
+        },
+        {
+            "id": 33,
+            "name": "Полурослик",
+            "code": "poluroslik",
+            "stats": {
+                "dexterity": 2
+            },
+            "gender": {
+                "male" : "male",
+                "female" : "female"
+            }
+        },
+        {
+            "id": 34,
+            "name": "Полуэльф",
+            "code": "poluelf",
+            "stats": {
+                "charisma": 2,
+                "counter": 2
+            },
+            "gender": {
+                "male" : "male",
+                "female" : "female"
+            }
+        },
+        {
+            "id": 35,
+            "name": "Сатир",
+            "code": "satir",
+            "stats": {
+                "charisma": 2,
+                "dexterity": 1
+            },
+            "gender": {
+                "male" : "male",
+                "female" : "female"
+            }
+        },
+        {
+            "id": 36,
+            "name": "Совлин",
+            "code": "sovlin",
+            "stats": {
+                "counter": 3
+            },
+            "gender": {
+                "male" : "male",
+                "female" : "female"
+            }
+        },
+        {
+            "id": 37,
+            "name": "Табакси",
+            "code": "tabaksi",
+            "stats": {
+                "dexterity": 2,
+                "charisma": 1
+            },
+            "gender": {
+                "male" : "male",
+                "female" : "female"
+            }
+        },
+        {
+            "id": 38,
+            "name": "Тифлинг",
+            "code": "tifling",
+            "stats": {
+                "charisma": 2,
+                "intelligence": 1
+            },
+            "gender": {
+                "male" : "male",
+                "female" : "female"
+            }
+        },
+        {
+            "id": 39,
+            "name": "Тортл",
+            "code": "tortl",
+            "stats": {
+                "strength": 2,
+                "wisdom": 1
+            },
+            "gender": {
+                "male" : "male",
+                "female" : "female"
+            }
+        },
+        {
+            "id": 40,
+            "name": "Три-крин",
+            "code": "tri-krin",
+            "stats": {
+                "counter": 2
+            },
+            "gender": {
+                "male" : "male",
+                "female" : "female"
+            }
+        },
+        {
+            "id": 41,
+            "name": "Тритон",
+            "code": "triton",
+            "stats": {
+                "strength": 1,
+                "charisma": 1,
+                "constitution": 1
+            },
+            "gender": {
+                "male" : "male",
+                "female" : "female"
+            }
+        },
+        {
+            "id": 42,
+            "name": "Фирболг",
+            "code": "firbolg",
+            "stats": {
+                "wisdom": 2,
+                "strength": 1
+            },
+            "gender": {
+                "male" : "male",
+                "female" : "female"
+            }
+        },
+        {
+            "id": 43,
+            "name": "Фэйри",
+            "code": "feyri",
+            "stats": {
+                "counter": 3
+            },
+            "gender": {
+                "male" : "male",
+                "female" : "female"
+            }
+        },
+        {
+            "id": 44,
+            "name": "Хадози",
+            "code": "khadozi",
+            "stats": {
+                "counter": 3
+            },
+            "gender": {
+                "male" : "male",
+                "female" : "female"
+            }
+        },
+        {
+            "id": 45,
+            "name": "Хобгоблин",
+            "code": "hobgoblin",
+            "stats": {
+                "constitution": 2,
+                "intelligence": 1
+            },
+            "gender": {
+                "male" : "male",
+                "female" : "female"
+            }
+        },
+        {
+            "id": 46,
+            "name": "Чейнджлинг",
+            "code": "cheindzhling",
+            "stats": {
+                "charisma": 2,
+                "counter": 1
+            },
+            "gender": {
+                "male" : "male",
+                "female" : "female"
+            }
+        },
+        {
+            "id": 47,
+            "name": "Человек",
+            "code": "chelovek",
+            "stats": {
+                "charisma": 1,
+                "dexterity": 1,
+                "constitution": 1,
+                "strength": 1,
+                "wisdom": 1,
+                "intelligence": 1
+            },
+            "gender": {
+                "male" : "male",
+                "female" : "female"
+            }
+        },
+        {
+            "id": 48,
+            "name": "Шифтер",
+            "code": "shifter",
+            "gender": {
+                "male" : "male",
+                "female" : "female"
+            }
+        },
+        {
+            "id": 49,
+            "name": "Эльф",
+            "code": "elf",
+            "stats": {
+                "dexterity": 2
+            },
+            "gender": {
+                "male" : "male",
+                "female" : "female"
+            }
+        },
+        {
+            "id": 50,
+            "name": "Юань-ти",
+            "code": "yuan-ti",
+            "stats": {
+                "charisma": 2,
+                "intelligence": 1
+            },
+            "gender": {
+                "male" : "male",
+                "female" : "female"
+            }
+        }
+    ]
+}
