@@ -1,135 +1,168 @@
 <template>
-<h1>Create your own character</h1>
+    <h1>Create your own character</h1>
     <form action="" @submit.prevent="submit">
         <div v-if="part === 1">
             ---------------------------------
             <label for="stats">BIO</label>
             ---------------------------------
             <label for="name">Name
-                <input v-model="name" type="text" name="name" id="name">
-                <span v-if="v$?.name?.$error" class="error" id="name_error">{{ this.errorRequired }}</span>
+                <input v-model="biography.name" type="text" name="name" id="name">
             </label>
 
-            <label for="story">Story
-                <input v-model="story" type="text" name="story" id="story">
-                <span v-if="v$?.story?.$error" class="error" id="story_error">{{ this.errorRequired }}</span>
+            <label for="class">Origin
+                <select v-model="biography.origin" name="class" id="class">
+                    <option v-for="origin in origins" :key="origin.id" :value="origin.code">{{ origin.name }}</option>
+                </select>
             </label>
 
+            <label for="story">Worldview
+                <input v-model="biography.worldview" type="text" name="story" id="story">
+            </label>
+
+            <label for="story">Growth
+                <input v-model="biography.growth" type="text" name="story" id="story">
+            </label>
+
+            <label for="story">Weight
+                <input v-model="biography.weight" type="text" name="story" id="story">
+            </label>
+
+            <label for="story">Age
+                <input v-model="biography.age" type="text" name="story" id="story">
+            </label>
+
+            <label for="story">Eyes
+                <input v-model="biography.eyes" type="text" name="story" id="story">
+            </label>
+
+            <label for="story">Skin
+                <input v-model="biography.skin" type="text" name="story" id="story">
+            </label>
+
+            <label for="story">Hair
+                <input v-model="biography.hair" type="text" name="story" id="story">
+            </label>
 
             <label for="race">Race
-                <select v-model="race" name="race" id="race">
+                <select v-model="biography.race" name="race" id="race">
                     <option v-for="race in races" :key="race.id" :value="race.code">{{ race.name }}</option>
                 </select>
-                <span v-if="v$?.race?.$error" class="error" id="race_error">{{ this.errorRequired }}</span>
             </label>
 
             <label for="gender">Gender
-                <select v-model="gender" name="gender" id="gender">
+                <select v-model="biography.gender" name="gender" id="gender">
                     <option v-for="gender in genders" :key="gender.id" :value="gender.code">{{ gender.name }}</option>
                 </select>
-                <span v-if="v$?.gender?.$error" class="error" id="gender_error">{{ this.errorRequired }}</span>
             </label>
 
             <label for="class">Class
-                <select v-model="chClass" name="class" id="class">
-                    <option v-for="chClass in classes" :key="chClass.id" :value="chClass.code">{{ chClass.name }}</option>
+                <select v-model="biography.chClass" name="class" id="class">
+                    <option v-for="chClass in classes" :key="chClass.id" :value="chClass.code">{{
+                            chClass.name
+                        }}
+                    </option>
                 </select>
-                <span v-if="v$?.class?.$error" class="error" id="class_error">{{ this.errorRequired }}</span>
+            </label>
+
+            <label for="story">Story
+                <textarea v-model="biography.story" type="text" name="story" id="story"></textarea>
+            </label>
+
+            <label for="story">Allies and organizations
+                <textarea v-model="biography.alliesAndOrganizations" type="text" name="story" id="story"></textarea>
+            </label>
+
+            <label for="story">Character traits
+                <input v-model="biography.characterTraits" type="text" name="story" id="story">
+            </label>
+
+            <label for="story">Ideals
+                <input v-model="biography.ideals" type="text" name="story" id="story">
+            </label>
+
+            <label for="story">Attachments
+                <input v-model="biography.attachments" type="text" name="story" id="story">
+            </label>
+
+            <label for="story">Weaknesses
+                <input v-model="biography.weaknesses" type="text" name="story" id="story">
             </label>
         </div>
-        <div v-if="part === 2">
+
+        <div v-if="part === 2" id="part-2">
             ---------------------------------
             <label for="stats">Stats</label>
+            <div>choosen data:<br>
+                <span>race: {{ this.getRaceData(biography.race).name }}</span><br>
+                <span>race stats:</span><br>
+                <ul>
+                    <li v-for="(value, key) in this.getRaceData(biography.race).data.stats" :key="key">
+                        {{ key }}: {{ value }}
+                    </li>
+                </ul>
+                <span>gender: {{ biography.gender }}</span><br>
+                <span>class: {{ biography.chClass }}</span><br>
+                <span>origin: {{ biography.origin }}</span><br>
+                <span>name: {{ biography.name }}</span><br>
+            </div>
+
+            <b>Complete to fill your stats by default after saving all features form race, gender and class will be
+                added to your character</b><br>
+
             ---------------------------------
             <label for="stats.strength">
                 Strength
-                <input v-model="stats.strength" type="number" name="stats.strength" id="stats.strength">
-                <span v-if="v$?.stats?.strength?.$error" class="error" id="stats.strength_error">{{ this.errorRequired }}</span>
+                <input v-model="biography.stats.strength" type="number" name="stats.strength" id="stats.strength">
             </label>
 
             <label for="stats.dexterity">
                 Dexterity
-                <input v-model="stats.dexterity" type="number" name="stats.dexterity" id="stats.dexterity">
-                <span v-if="v$?.stats?.dexterity?.$error" class="error" id="stats.dexterity_error">{{ this.errorRequired }}</span>
+                <input v-model="biography.stats.dexterity" type="number" name="stats.dexterity" id="stats.dexterity">
             </label>
 
             <label for="stats.constitution">
                 Constitution
-                <input v-model="stats.constitution" type="number" name="stats.constitution" id="stats.constitution">
-                <span v-if="v$?.stats?.constitution?.$error" class="error" id="stats.constitution_error">{{ this.errorRequired }}</span>
+                <input v-model="biography.stats.constitution" type="number" name="stats.constitution"
+                       id="stats.constitution">
             </label>
 
             <label for="stats.intelligence">
                 Intelligence
-                <input v-model="stats.intelligence" type="number" name="stats.intelligence" id="stats.intelligence">
-                <span v-if="v$?.stats?.intelligence?.$error" class="error" id="stats.intelligence_error">{{ this.errorRequired }}</span>
+                <input v-model="biography.stats.intelligence" type="number" name="stats.intelligence"
+                       id="stats.intelligence">
             </label>
 
             <label for="stats.wisdom">
                 Wisdom
-                <input v-model="stats.wisdom" type="number" name="stats.wisdom" id="stats.wisdom">
-                <span v-if="v$?.stats?.wisdom?.$error" class="error" id="stats.wisdom_error">{{ this.errorRequired }}</span>
+                <input v-model="biography.stats.wisdom" type="number" name="stats.wisdom" id="stats.wisdom">
             </label>
 
             <label for="stats.charisma">
                 Charisma
-                <input v-model="stats.charisma" type="number" name="stats.charisma" id="stats.charisma">
-                <span v-if="v$?.stats?.charisma?.$error" class="error" id="stats.charisma_error">{{ this.errorRequired }}</span>
+                <input v-model="biography.stats.charisma" type="number" name="stats.charisma" id="stats.charisma">
             </label>
         </div>
 
-        <button @click="part--" type="button">Prev</button>
-        <button @click="part++" type="button">Next</button>
-        <button type="submit">Create</button>
+        <button v-if="part > 1" @click="part--" type="button">Prev</button>
+        <button v-if="part < 3" @click="nextStage" type="button">Next</button>
+        <button v-if="part === 3" type="submit">Create</button>
     </form>
 
 </template>
 
 <script>
-import {useVuelidate} from '@vuelidate/core'
-import {required} from '@vuelidate/validators'
-import dataJson from '../../data.json'
+import {getCharacterData} from '../../scripts/characterData.js';
+import biography from '../../scripts/biography.js';
+
 export default {
     name: "CreateCharacter",
     data() {
         return {
-            errorRequired: 'Это поле обязательно',
-            name: '',
-            story: '',
-            race: '',
-            gender: '',
-            genders: '',
-            chClass: '',
-            classes: '',
-            stats: {
-                strength: 10,
-                dexterity: 10,
-                constitution: 10,
-                intelligence: 10,
-                wisdom: 10,
-                charisma: 10
-            },
             part: 1,
-        }
-    },
-    setup() {
-        return { v$: useVuelidate() }
-    },
-    validations() {
-        return {
-            name: { required },
-            story: { required },
-            race: { required },
-            gender: { required },
-            chClass: { required },
-            stats: {
-                strength: { required },
-                dexterity: { required },
-                constitution: { required },
-                intelligence: { required },
-                wisdom: { required },
-                charisma: { required }
-            }
+            character: {},
+            genders: '',
+            classes: '',
+            biography: biography
         }
     },
     computed: {
@@ -139,18 +172,35 @@ export default {
         races() {
             return this.$store.state.races
         },
-    },
-    methods: {
-        submit() {
-            this.v$.$touch()
-            if (!this.v$.$error) {
-                this.v$.$reset()
-                dataJson.characters.push({id: dataJson.characters.length + 1, image: '123', name: this.name, parent_id: this.user.id, story: this.story})
-                this.$router.push({name: 'user-characters'})
-            }
+        origins() {
+            return this.$store.state.origins
         }
     },
-    watch:{
+    methods: {
+        nextStage() {
+            if (this.part === 1) {
+                this.character = {
+                    ...this.character,
+                    ...getCharacterData(this.biography, this.user)
+                };
+                this.part = 2;
+                return;
+            }
+
+            if (this.part === 2) {
+                this.character.stats = this.biography.stats;
+                this.part = 3;
+            }
+        },
+        limitStatValue(stat) {
+            this.biography.stats[stat] = this.biography.stats[stat] < 2 ? 2 : this.biography.stats[stat] > 20 ? 20 : this.biography.stats[stat];
+        },
+        getRaceData(race) {
+            console.log()
+            return this.$store.state.races.find(r => r.code === race)
+        }
+    },
+    watch: {
         part() {
             if (this.part < 1) {
                 this.part = 1
@@ -159,49 +209,36 @@ export default {
                 this.part = 3
             }
         },
-        race(newRace, oldRace) {
+        'biography.race': function (newRace, oldRace) {
             if (newRace) {
                 this.genders = this.$store.state.races.find(r => r.code === newRace).genders
                 this.classes = this.$store.state.races.find(r => r.code === newRace).ch_classes
             }
-
         },
-        'stats.strength': function () {
-            if (this.stats.strength < 0) {
-                this.stats.strength = 0
-            }
+        'biography.stats.strength': function () {
+            this.limitStatValue('strength');
         },
-        'stats.dexterity': function () {
-            if (this.stats.dexterity < 0) {
-                this.stats.dexterity = 0
-            }
+        'biography.stats.dexterity': function () {
+            this.limitStatValue('dexterity');
         },
-        'stats.constitution': function () {
-            if (this.stats.constitution < 0) {
-                this.stats.constitution = 0
-            }
+        'biography.stats.constitution': function () {
+            this.limitStatValue('constitution');
         },
-        'stats.intelligence': function () {
-            if (this.stats.intelligence < 0) {
-                this.stats.intelligence = 0
-            }
+        'biography.stats.intelligence': function () {
+            this.limitStatValue('intelligence');
         },
-        'stats.wisdom': function () {
-            if (this.stats.wisdom < 0) {
-                this.stats.wisdom = 0
-            }
+        'biography.stats.wisdom': function () {
+            this.limitStatValue('wisdom');
         },
-        'stats.charisma': function () {
-            if (this.stats.charisma < 0) {
-                this.stats.charisma = 0
-            }
+        'biography.stats.charisma': function () {
+            this.limitStatValue('charisma');
         }
     }
 }
 </script>
 
 <style scoped>
-form{
+form {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
@@ -209,7 +246,8 @@ form{
     max-width: 400px;
     margin-bottom: 20px;
 }
-label{
+
+label {
     display: flex;
     flex-direction: column;
     align-items: flex-start;

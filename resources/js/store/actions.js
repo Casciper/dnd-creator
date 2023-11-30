@@ -9,7 +9,8 @@ const getRaces = ({commit, dispatch}) => {
         .get('/api/get-race')
         .then(response => {
             if (response.data) {
-                commit('setRaces', response.data)
+                commit('setRaces', response.data.race)
+                commit('setOrigins', response.data.origins)
             }
         })
         .catch(error => {

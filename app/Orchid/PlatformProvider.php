@@ -38,6 +38,7 @@ class PlatformProvider extends OrchidServiceProvider
             Menu::make('Расы')->route(OrchidRoutes::RACES->list())->icon('user'),
             Menu::make('Гендер')->route(OrchidRoutes::GENDER->list())->icon('user'),
             Menu::make('Классы')->route(OrchidRoutes::CHCLASS->list())->icon('user'),
+            Menu::make('Происхождение')->route(OrchidRoutes::ORIGIN->list())->icon('user'),
 
             Menu::make('Настройки SEO')->icon('globe')->list([
                 Menu::make('SEO')->route(OrchidRoutes::SEO->base())->icon('docs'),

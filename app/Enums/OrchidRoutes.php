@@ -11,6 +11,7 @@ enum OrchidRoutes: string
     case SEO = 'seo';
     case RACES = 'race';
     case GENDER = 'gender';
+    case ORIGIN = 'origin';
     case CHCLASS = 'class';
     case ROBOTS = 'robot';
     case SITEMAP = 'sitemap';
@@ -48,6 +49,7 @@ enum OrchidRoutes: string
             self::INFO_PAGES->value => 'Страницы',
             self::SEO->value => 'SEO-модуль',
             self::CHCLASS->value => 'Классы',
+            self::ORIGIN->value => 'Происхождение',
             self::GENDER->value => 'Гендер',
             self::RACES->value => 'Расы',
             self::CONFIGURATOR->value => 'Конфигуратор',
@@ -68,6 +70,7 @@ enum OrchidRoutes: string
             self::RACES->value => false,
             self::GENDER->value,
             self::CHCLASS->value,
+            self::ORIGIN->value,
             self::INFO_PAGES->value,
             self::SEO->value => false,
             self::CONFIGURATOR->value,

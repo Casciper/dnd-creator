@@ -14,6 +14,8 @@ use App\Orchid\Screens\Classes\ClassList;
 use App\Orchid\Screens\ConfiguratorEdit;
 use App\Orchid\Screens\Genders\GenderEdit;
 use App\Orchid\Screens\Genders\GenderList;
+use App\Orchid\Screens\Origins\OriginEdit;
+use App\Orchid\Screens\Origins\OriginList;
 use App\Orchid\Screens\Pages\PageList;
 use App\Orchid\Screens\Pages\PageEdit;
 use App\Orchid\Screens\PlatformScreen;
@@ -49,6 +51,7 @@ OrchidHelper::setAdminRoutes(OrchidRoutes::ARTICLES->value, ArticleList::class, 
 OrchidHelper::setAdminRoutes(OrchidRoutes::RACES->value, RaceList::class, RaceEdit::class);
 OrchidHelper::setAdminRoutes(OrchidRoutes::GENDER->value, GenderList::class, GenderEdit::class);
 OrchidHelper::setAdminRoutes(OrchidRoutes::CHCLASS->value, ClassList::class, ClassEdit::class);
+OrchidHelper::setAdminRoutes(OrchidRoutes::ORIGIN->value, OriginList::class, OriginEdit::class);
 
 // Platform > Profile
 Route::screen('profile', UserProfileScreen::class)->name('platform.profile')->breadcrumbs(fn (Trail $trail) => $trail

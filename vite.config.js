@@ -5,7 +5,7 @@ import vue from '@vitejs/plugin-vue'
 export default ({ mode }) => {
     process.env = {...process.env, ...loadEnv(mode, process.cwd())};
 
-    const port = process.env.VITE_PORT;
+    const port = process.env.VITE_DOCKER_PORT;
 
     return defineConfig({
         server: {
@@ -19,7 +19,7 @@ export default ({ mode }) => {
         plugins: [
             vue(),
             laravel({
-                input: ['resources/scss/app.scss', 'resources/scss/admin/app.scss', 'resources/js/app.js', 'resources/js/admin/app.js'],
+                input: ['resources/scss/client/app.scss', 'resources/scss/admin/app.scss', 'resources/js/app.js', 'resources/js/admin/app.js'],
                 refresh: true,
             }),
         ],

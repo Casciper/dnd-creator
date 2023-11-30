@@ -7,6 +7,7 @@ use App\Enums\ModalValidation;
 use App\Helpers\CommonHelper;
 use App\Models\Article;
 use App\Models\ArticleCategory;
+use App\Models\Origin;
 use App\Models\Race;
 use App\Services\ArticlesService;
 use Illuminate\Foundation\Http\FormRequest;
@@ -40,7 +41,13 @@ class AjaxController extends Controller
     public function getRaceData()
     {
         $race = Race::query()->active()->with('genders', 'chClasses')->get();
+        $origins = Origin::query()->active()->get();
 
-        return response()->json($race);
+        $data = [
+            'race' => $race,
+            'origins' => $origins
+        ];
+
+        return response()->json($data);
     }
 }

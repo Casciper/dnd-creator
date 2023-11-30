@@ -62,12 +62,12 @@ class RaceEdit extends EditScreenPattern
                     ]),
 
                     Group::make([
-                        Input::make('item.strength')->title('Сила')->type('number'),
-                        Input::make('item.dexterity')->title('Ловкость')->type('number'),
-                        Input::make('item.constitution')->title('Телосложение')->type('number'),
-                        Input::make('item.intelligence')->title('Интеллект')->type('number'),
-                        Input::make('item.wisdom')->title('Мудрость')->type('number'),
-                        Input::make('item.charisma')->title('Харизма')->type('number'),
+                        Input::make('item.data.stats.strength')->title('Сила')->type('number'),
+                        Input::make('item.data.stats.dexterity')->title('Ловкость')->type('number'),
+                        Input::make('item.data.stats.constitution')->title('Телосложение')->type('number'),
+                        Input::make('item.data.stats.intelligence')->title('Интеллект')->type('number'),
+                        Input::make('item.data.stats.wisdom')->title('Мудрость')->type('number'),
+                        Input::make('item.data.stats.charisma')->title('Харизма')->type('number'),
                     ]),
 
                     TinyMce::make('item.description')->title('Описание расы')->required(),

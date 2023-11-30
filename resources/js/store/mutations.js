@@ -16,9 +16,14 @@ const setRaces = (state, data) => {
     state.races = data
 }
 
+const setOrigins = (state, data) => {
+    state.origins = data
+}
+
 export default {
     changeToken,
     changeAuthenticated,
     setUserInfo,
-    setRaces
+    setRaces,
+    setOrigins
 }
