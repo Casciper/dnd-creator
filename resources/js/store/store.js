@@ -8,9 +8,9 @@ export const store = createStore({
             isAuthenticated: false,
             isLoading: false,
             user: {
-                id: 1,
-                username: "Casciper",
-                password: "0504asdasd",
+                id: null,
+                username: null,
+                password: null,
             },
             token: null,
         }
