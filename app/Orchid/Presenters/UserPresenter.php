@@ -10,10 +10,10 @@ use Orchid\Screen\Contracts\Personable;
 use Orchid\Screen\Contracts\Searchable;
 use Orchid\Support\Presenter;
 
-class UserPresenter extends Presenter implements Personable, Searchable
+class UserPresenter extends Presenter implements Searchable, Personable
 {
     /**
-     * Returns the label for this presenter, which is used in the UI to identify it.
+     * @return string
      */
     public function label(): string
     {
@@ -21,7 +21,7 @@ class UserPresenter extends Presenter implements Personable, Searchable
     }
 
     /**
-     * Returns the title for this presenter, which is displayed in the UI as the main heading.
+     * @return string
      */
     public function title(): string
     {
@@ -29,19 +29,19 @@ class UserPresenter extends Presenter implements Personable, Searchable
     }
 
     /**
-     * Returns the subtitle for this presenter, which provides additional context about the user.
+     * @return string
      */
     public function subTitle(): string
     {
         $roles = $this->entity->roles->pluck('name')->implode(' / ');
 
-        return (string) Str::of($roles)
+        return (string)Str::of($roles)
             ->limit(20)
-            ->whenEmpty(fn () => __('Regular User'));
+            ->whenEmpty(fn() => __('Regular user'));
     }
 
     /**
-     * Returns the URL for this presenter, which is used to link to the user's edit page.
+     * @return string
      */
     public function url(): string
     {
@@ -49,20 +49,19 @@ class UserPresenter extends Presenter implements Personable, Searchable
     }
 
     /**
-     * Returns the URL for the user's Gravatar image, or a default image if one is not found.
+     * @return string
      */
     public function image(): ?string
     {
         $hash = md5(strtolower(trim($this->entity->email)));
 
-        $default = urlencode('https://raw.githubusercontent.com/orchidsoftware/.github/main/web/avatars/gravatar.png');
-
-        return "https://www.gravatar.com/avatar/$hash?d=$default";
+        return "https://www.gravatar.com/avatar/$hash?d=mp";
     }
 
     /**
-     * Returns the number of models to return for a compact search result.
-     * This method is used by the search functionality to display a list of matching results.
+     * The number of models to return for show compact search result.
+     *
+     * @return int
      */
     public function perSearchShow(): int
     {
@@ -70,8 +69,9 @@ class UserPresenter extends Presenter implements Personable, Searchable
     }
 
     /**
-     * Returns a Laravel Scout builder object that can be used to search for matching users.
-     * This method is used by the search functionality to retrieve a list of matching results.
+     * @param string|null $query
+     *
+     * @return Builder
      */
     public function searchQuery(string $query = null): Builder
     {

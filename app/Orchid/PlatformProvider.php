@@ -4,20 +4,16 @@ declare(strict_types=1);
 
 namespace App\Orchid;
 
+use App\Enums\OrchidRoutes;
 use Orchid\Platform\Dashboard;
 use Orchid\Platform\ItemPermission;
 use Orchid\Platform\OrchidServiceProvider;
 use Orchid\Screen\Actions\Menu;
-use Orchid\Support\Color;
 
 class PlatformProvider extends OrchidServiceProvider
 {
     /**
-     * Bootstrap the application services.
-     *
      * @param Dashboard $dashboard
-     *
-     * @return void
      */
     public function boot(Dashboard $dashboard): void
     {
@@ -27,81 +23,54 @@ class PlatformProvider extends OrchidServiceProvider
     }
 
     /**
-     * Register the application menu.
-     *
      * @return Menu[]
      */
-    public function menu(): array
+    public function registerMainMenu(): array
     {
         return [
-            Menu::make('Get Started')
-                ->icon('bs.book')
-                ->title('Navigation')
-                ->route(config('platform.index')),
 
-            Menu::make('Sample Screen')
-                ->icon('bs.collection')
-                ->route('platform.example')
-                ->badge(fn () => 6),
+            Menu::make('Публикации')->icon('feed')->list([
+                Menu::make('Статьи')->route(OrchidRoutes::ARTICLES->list())->icon('book-open'),
+                Menu::make('Категории статей')->route(OrchidRoutes::ARTICLE_CATEGORIES->list())->icon('list'),
+            ]),
 
-            Menu::make('Form Elements')
-                ->icon('bs.card-list')
-                ->route('platform.example.fields')
-                ->active('*/examples/form/*'),
+            Menu::make('Страницы')->route(OrchidRoutes::INFO_PAGES->list())->icon('info'),
+            Menu::make('Расы')->route(OrchidRoutes::RACES->list())->icon('user'),
+            Menu::make('Гендер')->route(OrchidRoutes::GENDER->list())->icon('user'),
+            Menu::make('Классы')->route(OrchidRoutes::CHCLASS->list())->icon('user'),
 
-            Menu::make('Overview Layouts')
-                ->icon('bs.window-sidebar')
-                ->route('platform.example.layouts'),
+            Menu::make('Настройки SEO')->icon('globe')->list([
+                Menu::make('SEO')->route(OrchidRoutes::SEO->base())->icon('docs'),
+                Menu::make('Robots.txt')->route(OrchidRoutes::ROBOTS->base())->icon('android'),
+                Menu::make('Sitemap.xml')->route(OrchidRoutes::SITEMAP->base())->icon('map'),
+            ]),
+            Menu::make('Настройки сайта')->route(OrchidRoutes::CONFIGURATOR->base())->icon('settings'),
 
-            Menu::make('Grid System')
-                ->icon('bs.columns-gap')
-                ->route('platform.example.grid'),
+            Menu::make(__('Users'))->icon('user')->route('platform.systems.users')
+                ->permission('platform.systems.users')->title(__('Access rights')),
 
-            Menu::make('Charts')
-                ->icon('bs.bar-chart')
-                ->route('platform.example.charts'),
-
-            Menu::make('Cards')
-                ->icon('bs.card-text')
-                ->route('platform.example.cards')
-                ->divider(),
-
-            Menu::make(__('Users'))
-                ->icon('bs.people')
-                ->route('platform.systems.users')
-                ->permission('platform.systems.users')
-                ->title(__('Access Controls')),
-
-            Menu::make(__('Roles'))
-                ->icon('bs.shield')
-                ->route('platform.systems.roles')
-                ->permission('platform.systems.roles')
-                ->divider(),
-
-            Menu::make('Documentation')
-                ->title('Docs')
-                ->icon('bs.box-arrow-up-right')
-                ->url('https://orchid.software/en/docs')
-                ->target('_blank'),
-
-            Menu::make('Changelog')
-                ->icon('bs.box-arrow-up-right')
-                ->url('https://github.com/orchidsoftware/platform/blob/master/CHANGELOG.md')
-                ->target('_blank')
-                ->badge(fn () => Dashboard::version(), Color::DARK),
+            Menu::make(__('Roles'))->icon('lock')->route('platform.systems.roles')
+                ->permission('platform.systems.roles'),
         ];
     }
 
     /**
-     * Register permissions for the application.
-     *
-     * @return ItemPermission[]
+     * @return Menu[]
      */
-    public function permissions(): array
+    public function registerProfileMenu(): array
     {
         return [
-            ItemPermission::group(__('System'))
-                ->addPermission('platform.systems.roles', __('Roles'))
+            Menu::make(__('Profile'))->route('platform.profile')->icon('user'),
+        ];
+    }
+
+    /**
+     * @return ItemPermission[]
+     */
+    public function registerPermissions(): array
+    {
+        return [
+            ItemPermission::group(__('System'))->addPermission('platform.systems.roles', __('Roles'))
                 ->addPermission('platform.systems.users', __('Users')),
         ];
     }

@@ -8,7 +8,10 @@ import Menu from "./Menu.vue";
 
 export default {
     name: "App",
-    components: {Menu}
+    components: {Menu},
+    created() {
+       this.$store.dispatch('getRaces')
+    }
 }
 </script>
 

@@ -7,33 +7,22 @@ namespace App\Orchid\Filters;
 use Illuminate\Database\Eloquent\Builder;
 use Orchid\Filters\Filter;
 use Orchid\Platform\Models\Role;
+use Orchid\Screen\Field;
 use Orchid\Screen\Fields\Select;
 
 class RoleFilter extends Filter
 {
     /**
-     * The displayable name of the filter.
-     *
-     * @return string
-     */
-    public function name(): string
-    {
-        return __('Roles');
-    }
-
-    /**
      * The array of matched parameters.
      *
-     * @return array
+     * @return array|null
      */
-    public function parameters(): array
+    public function parameters(): ?array
     {
         return ['role'];
     }
 
     /**
-     * Apply to a given Eloquent query builder.
-     *
      * @param Builder $builder
      *
      * @return Builder
@@ -46,7 +35,7 @@ class RoleFilter extends Filter
     }
 
     /**
-     * Get the display fields.
+     * @return Field[]
      */
     public function display(): array
     {
@@ -60,10 +49,18 @@ class RoleFilter extends Filter
     }
 
     /**
-     * Value to be displayed
+     * @return string
      */
     public function value(): string
     {
-        return $this->name().': '.Role::where('slug', $this->request->get('role'))->first()->name;
+        return $this->name() . ': ' . Role::where('slug', $this->request->get('role'))->first()->name;
+    }
+
+    /**
+     * @return string
+     */
+    public function name(): string
+    {
+        return __('Roles');
     }
 }

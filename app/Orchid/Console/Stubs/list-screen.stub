@@ -1,0 +1,78 @@
+<?php
+
+namespace App\Orchid\Screens\DirectoryName;
+
+use App\Enums\OrchidRoutes;
+use App\Models\ProtoModel;
+use App\Orchid\Abstractions\ListScreenPattern;
+use App\Orchid\Filters\DateCreatedFilter;
+use App\Orchid\Filters\IsActiveFilter;
+use App\Orchid\Layouts\EmptyModal;
+use App\Orchid\Traits\ActivitySignsTrait;
+use Orchid\Screen\Actions\Button;
+use Orchid\Screen\Actions\DropDown;
+use Orchid\Screen\Actions\Link;
+use Orchid\Screen\Fields\DateTimer;
+use Orchid\Screen\TD;
+use Orchid\Support\Facades\Layout;
+use Orchid\Support\Facades\Alert;
+
+class StubListScreen extends ListScreenPattern
+{
+    use ActivitySignsTrait;
+
+    public function __construct()
+    {
+        $this->route = OrchidRoutes::;
+        $this->name = $this->route->getTitle();
+    }
+
+    public function query(): iterable
+    {
+        $this->model = ProtoModel::query()->filters([
+//                    IsActiveFilter::class,
+            DateCreatedFilter::class,
+        ]);
+        return parent::query();
+    }
+
+    public function layout(): iterable
+    {
+        return [
+            Layout::table('items', [
+                TD::make('id', 'ID')->sort()->filter(TD::FILTER_NUMBER_RANGE),
+                TD::make('', ''),
+
+                TD::make()->width(10)->alignRight()->cantHide()->render(fn($item) => DropDown::make()->icon('options-vertical')->list([
+                    Link::make(__('Edit'))->icon('wrench')->route($this->route->edit(), [$item->id]),
+                    Button::make('Удалить')->icon('trash')->method('deleteItem', ['id' => $item->id, 'title' => $item->getTitle()])
+                        ->confirm('Вы действительно хотите удалить запись №:' . $item->id . ' - ' . $item->getTitle() . '?'),
+                ])),
+            ]),
+            Layout::modal('deleteItem', EmptyModal::class)->title('Удалить запись?')
+                ->applyButton('Да')->closeButton('Нет')->async('asyncGetItem'),
+        ];
+    }
+
+    public function asyncGetItem(ProtoModel $item)
+    {
+        return [
+            'item' => $item,
+        ];
+    }
+
+    public function deleteItem(ProtoModel $item)
+    {
+        $id = $item->id;
+        $title = $item->getTitle();
+
+        try {
+            $this->detachRelations($item);
+            $item->delete();
+        } catch (\Exception $exception) {
+            Alert::error($exception->getMessage());
+        }
+        Alert::success("Запись №:$id - '$title'  успешно удалена!");
+    }
+}
+}

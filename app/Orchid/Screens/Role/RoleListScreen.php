@@ -8,6 +8,7 @@ use App\Orchid\Layouts\Role\RoleListLayout;
 use Orchid\Platform\Models\Role;
 use Orchid\Screen\Action;
 use Orchid\Screen\Actions\Link;
+use Orchid\Screen\Layout;
 use Orchid\Screen\Screen;
 
 class RoleListScreen extends Screen
@@ -26,20 +27,27 @@ class RoleListScreen extends Screen
 
     /**
      * The name of the screen displayed in the header.
+     *
+     * @return string|null
      */
     public function name(): ?string
     {
-        return 'Role Management';
+        return 'Manage roles';
     }
 
     /**
      * Display header description.
+     *
+     * @return string|null
      */
     public function description(): ?string
     {
-        return 'A comprehensive list of all roles, including their permissions and associated users.';
+        return 'Access rights';
     }
 
+    /**
+     * @return iterable|null
+     */
     public function permission(): ?iterable
     {
         return [
@@ -56,7 +64,7 @@ class RoleListScreen extends Screen
     {
         return [
             Link::make(__('Add'))
-                ->icon('bs.plus-circle')
+                ->icon('plus')
                 ->href(route('platform.systems.roles.create')),
         ];
     }
@@ -64,7 +72,7 @@ class RoleListScreen extends Screen
     /**
      * The screen's layout elements.
      *
-     * @return string[]|\Orchid\Screen\Layout[]
+     * @return string[]|Layout[]
      */
     public function layout(): iterable
     {

@@ -4,13 +4,32 @@
     "description": "The skeleton application for the Laravel framework.",
     "keywords": ["laravel", "framework"],
     "license": "MIT",
+    "repositories": [
+        {
+            "url": "https://github.com/Rocont/orchid-repeater-field.git",
+            "type": "git"
+        },
+        {
+            "url": "https://github.com/nakipelo/orchid-tables.git",
+            "type": "git"
+        }
+    ],
     "require": {
         "php": "^8.1",
-        "guzzlehttp/guzzle": "^7.2",
-        "laravel/framework": "^10.10",
-        "laravel/sanctum": "^3.3",
-        "laravel/tinker": "^2.8",
-        "orchid/platform": "^14.15"
+        "barryvdh/laravel-debugbar": "^3.8",
+        "doctrine/dbal": "^3.6",
+        "guzzlehttp/guzzle": "7.7.0",
+        "kalnoy/nestedset": "^6.0",
+        "laravel/framework": "v10.25.0",
+        "laravel/passport": "^11.0",
+        "laravel/sanctum": "3.2.5",
+        "laravel/tinker": "^2.7",
+        "lintaba/orchid-tables": "^14.0",
+        "nakukryskin/orchid-repeater-field": "^13.0.2",
+        "orchid/icons": "^2.0",
+        "orchid/platform": "^14.14.0",
+        "spatie/laravel-ignition": "^2.0",
+        "tijsverkoyen/css-to-inline-styles": "^2.2.5"
     },
     "require-dev": {
         "fakerphp/faker": "^1.9.1",

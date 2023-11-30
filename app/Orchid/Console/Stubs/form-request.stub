@@ -1,0 +1,58 @@
+<?php
+
+namespace App\Http\Requests;
+
+use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Foundation\Http\FormRequest;
+
+class RocontFormRequest extends FormRequest
+{
+    public $validator;
+
+    public function authorize()
+    {
+        return true;
+    }
+
+    public function rules()
+    {
+        return [
+            '1' => ['bail', 'required'],
+            '2' => ['bail', 'required'],
+            '3' => ['bail', 'required'],
+            '4' => ['bail', 'required'],
+        ];
+    }
+
+    public function messages(): array
+    {
+        return [
+            '1'    => '',
+            '2'    => '',
+            '3'    => '',
+            '4'    => '',
+        ];
+    }
+
+    protected function failedValidation(Validator $validator)
+    {
+        $this->validator = $validator;
+    }
+
+    public function getValidator()
+    {
+        return !empty($this->validator) ? $this->validator : null;
+    }
+
+    public function getErrors()
+    {
+        return !empty($this->validator)
+            ? collect($this->validator->messages()->messages())->map(fn($error, $name) => $error[0])->toArray()
+            : [];
+    }
+
+    public function fail(): bool
+    {
+        return !$this->validator?->passes();
+    }
+}

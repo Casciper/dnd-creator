@@ -1,0 +1,63 @@
+<?php
+
+namespace App\Orchid\Screens\DirectoryName;
+
+use App\Enums\OrchidRoutes;
+use App\Models\ProtoModel;
+use App\Orchid\Abstractions\EditScreenPattern;
+use App\Orchid\Layouts\EmptyModal;
+use App\Orchid\Traits\CommandBarDeletableTrait;
+use Illuminate\Http\Request;
+use Orchid\Support\Facades\Layout;
+
+class StubEditScreen extends EditScreenPattern
+{
+
+    protected string $createTitle = 'Создание ITEM';
+    protected string $updateTitle = 'Редактирование ITEM';
+    protected string $deleteMessage = 'Запись успешно удалена';
+    protected string $createMessage = 'Запись успешно добавлена';
+    protected string $titleName = 'title';
+    protected ProtoModel $item;
+
+    use CommandBarDeletableTrait;
+
+    public function __construct()
+    {
+        $this->route = OrchidRoutes::;
+    }
+
+    public function layout(): iterable
+    {
+        return [
+            Layout::rows([
+                // fields ...
+            ]),
+            Layout::modal('remove', EmptyModal::class)->title('Удалить запись?')
+                ->applyButton('Да')->closeButton('Нет')->async('asyncGetItem'),
+        ];
+    }
+
+    public function query(ProtoModel $item)
+    {
+        return $this->queryMake($item);
+    }
+
+    public function save(ProtoModel $item, Request $request)
+    {
+        $data = $request->input('item');
+        return $this->saveItem($item, $data);
+    }
+
+    public function remove(ProtoModel $item)
+    {
+        return $this->removeItem($item);
+    }
+
+    public function asyncGetItem(ProtoModel $item)
+    {
+        return [
+            'item' => $item,
+        ];
+    }
+}

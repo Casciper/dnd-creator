@@ -1,0 +1,33 @@
+.datetime {
+    width: 150px;
+}
+
+.logo-img {
+    background-color: #edeef0;
+    border-radius: 5px;
+    padding: 10px;
+    text-align: center;
+}
+
+.logo-img img {
+    width: 200px
+}
+
+.underline {
+    text-decoration: underline;
+}
+
+.cropper-preview {
+    max-height: 350px;
+    max-width: 350px;
+}
+
+.btn.btn-link {
+    svg {
+        overflow: visible;
+    }
+}
+
+.tox-statusbar__text-container {
+    display: none !important;
+}

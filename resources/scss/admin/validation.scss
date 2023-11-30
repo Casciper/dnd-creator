@@ -1,0 +1,114 @@
+$success-border: 1px solid green!important;
+$error-border: 1px solid red!important;
+$default-border: 1px solid rgba(21, 20, 26, .1)!important;
+$unset: unset!important;
+$border-radius: 10px!important;
+
+@mixin reset($border) {
+    background-image: $unset;
+    background-position: $unset;
+    background-repeat: $unset;
+    background-size: $unset;
+    border: $border;
+    padding-right: $unset;
+}
+
+@mixin inputReset() {
+    min-height: $unset;
+    width: 1px;
+    height: 1px;
+    border: none;
+    position: absolute;
+    opacity: 0;
+}
+
+.form-control:focus{
+
+}
+
+.was-validated {
+    .form-control {
+        &:valid {
+            @include reset($success-border);
+
+            &:focus {
+                border: $success-border;
+                box-shadow: none;
+            }
+            +.ts-wrapper {
+                border: $success-border;
+                &.single {
+                    background-image: $unset;
+                }
+                &:not(.single) {
+                    background-image: $unset;
+                }
+            }
+        }
+
+        &:invalid {
+            @include reset($error-border);
+
+            &:focus {
+                border: $error-border;
+                box-shadow: none;
+            }
+
+            +.ts-wrapper {
+                border: $error-border;
+                &.single {
+                    background-image: $unset;
+                }
+                &:not(.single) {
+                    background-image: $unset;
+                }
+            }
+        }
+
+        &:not([required]) {
+            &:valid,
+            &:invalid {
+                border: $default-border;
+                +.ts-wrapper {
+                    border: $default-border;
+                }
+            }
+        }
+    }
+}
+
+.validation-error {
+    border: $error-border;
+
+    .rounded {
+        border-radius: $border-radius;
+    }
+}
+
+.validation-success {
+    border: $success-border;
+
+    .rounded {
+        border-radius: $border-radius;
+    }
+}
+.cropper-path,
+.uploader-data{
+    @include inputReset();
+}
+.uploader-field{
+    &.validation-error{
+        background: #fff6f6!important;
+    }
+    &.validation-success{
+        background: #f9fff9!important;
+    }
+}
+
+.mce-container {
+    display: flex;
+    .tinymce {
+        display: block !important;
+        @include inputReset();
+    }
+}

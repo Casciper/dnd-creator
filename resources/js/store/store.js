@@ -12,6 +12,7 @@ export const store = createStore({
                 username: null,
                 password: null,
             },
+            races: null,
             token: null,
         }
     },
