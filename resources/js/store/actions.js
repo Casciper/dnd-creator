@@ -18,6 +18,19 @@ const getRaces = ({commit, dispatch}) => {
         });
 }
 
+const getCharacters = ({commit, dispatch}) => {
+    return axios
+        .post('/api/get-characters', {user_id: store.state.user.id})
+        .then(response => {
+            if (response.data) {
+                commit('setCharacters', response.data)
+            }
+        })
+        .catch(error => {
+            console.error(error);
+        });
+}
+
 const checkUser = ({commit, dispatch}) => {
 
 }
@@ -36,5 +49,6 @@ const logout = ({commit}) => {
 export default {
     checkUser,
     logout,
-    getRaces
+    getRaces,
+    getCharacters
 }

@@ -7,6 +7,7 @@ use App\Enums\ModalValidation;
 use App\Helpers\CommonHelper;
 use App\Models\Article;
 use App\Models\ArticleCategory;
+use App\Models\Character;
 use App\Models\Origin;
 use App\Models\Race;
 use App\Services\ArticlesService;
@@ -49,5 +50,21 @@ class AjaxController extends Controller
         ];
 
         return response()->json($data);
+    }
+
+    public function addCharacter(Request $request)
+    {
+        $data = $request->all();
+        $char = new Character();
+        $char->fill($data);
+        $char->save();
+        return response()->json(['success' => true]);
+    }
+
+    public function getCharacters(Request $request)
+    {
+        $data = $request->input('user_id');
+        $characters = Character::query()->where('parent_id', $data)->get();
+        return response()->json($characters);
     }
 }

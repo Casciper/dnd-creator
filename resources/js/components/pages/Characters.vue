@@ -13,12 +13,12 @@
             </tr>
             </thead>
             <tbody>
-            <tr v-if="characters !== ''" v-for="character in characters" :key="character.id">
+            <tr v-for="character in characters" :key="character.id">
                 <td>{{ character.id }}</td>
                 <td>{{ character.name }}</td>
                 <td><router-link :to="{ name: 'character-edit', params: {id: character.id}}">Edit</router-link> <button @click="remove(character.id)">Remove</button></td>
             </tr>
-            <tr v-else>Characters not found for you, <router-link :to="{ name: 'character-create' }">Create new</router-link></tr>
+            <tr>Characters not found for you, <router-link :to="{ name: 'character-create' }">Create new</router-link></tr>
             </tbody>
         </table>
     </div>
@@ -30,19 +30,18 @@ export default {
     name: "Characters",
     data() {
         return {
-            characters: '',
         }
     },
     computed: {
         user() {
             return this.$store.state.user
         },
+        characters() {
+            return this.$store.state.user.characters
+        }
     },
     mounted() {
-        this.characters = dataJson.characters.filter(c => c.parent_id === this.user.id)
-        if (this.characters.length === 0) {
-            this.characters = ''
-        }
+        this.$store.dispatch('getCharacters')
     },
     methods: {
         remove(id) {

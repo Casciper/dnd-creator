@@ -20,10 +20,15 @@ const setOrigins = (state, data) => {
     state.origins = data
 }
 
+const setCharacters = (state, data) => {
+    state.user.characters = data
+}
+
 export default {
     changeToken,
     changeAuthenticated,
     setUserInfo,
     setRaces,
-    setOrigins
+    setOrigins,
+    setCharacters
 }

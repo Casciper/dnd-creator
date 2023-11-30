@@ -16,6 +16,8 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/get-race', [AjaxController::class, 'getRaceData']);
+Route::post('/add-character', [AjaxController::class, 'addCharacter']);
+Route::post('/get-characters' , [AjaxController::class, 'getCharacters']);
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();

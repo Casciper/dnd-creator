@@ -111,35 +111,72 @@
 
             ---------------------------------
             <label for="stats.strength">
-                Strength
-                <input v-model="biography.stats.strength" type="number" name="stats.strength" id="stats.strength">
+                Strength {{ biography.stats.strength.modifier }}
+                <input v-model="biography.stats.strength.value" type="number" name="stats.strength" id="stats.strength">
+                <ul>
+                    <li v-for="(value, key) in biography.stats.strength.skills" :key="key">
+                        <input type="checkbox" :value="key" v-model="biography.stats.strength.skills[key].isOwns">
+                        {{ key }}: {{ value.isOwns ? value.value + ownsBonus : value.value }}
+                    </li>
+                </ul>
             </label>
 
             <label for="stats.dexterity">
-                Dexterity
-                <input v-model="biography.stats.dexterity" type="number" name="stats.dexterity" id="stats.dexterity">
+                Dexterity {{ biography.stats.dexterity.modifier }}
+                <input v-model="biography.stats.dexterity.value" type="number" name="stats.dexterity"
+                       id="stats.dexterity">
+                <ul>
+                    <li v-for="(value, key) in biography.stats.dexterity.skills" :key="key">
+                        <input type="checkbox" :value="key" v-model="biography.stats.dexterity.skills[key].isOwns">
+                        {{ key }}: {{ value.isOwns ? value.value + ownsBonus : value.value }}
+                    </li>
+                </ul>
             </label>
 
             <label for="stats.constitution">
-                Constitution
-                <input v-model="biography.stats.constitution" type="number" name="stats.constitution"
+                Constitution {{ biography.stats.constitution.modifier }}
+                <input v-model="biography.stats.constitution.value" type="number" name="stats.constitution"
                        id="stats.constitution">
+                <ul>
+                    <li v-for="(value, key) in biography.stats.constitution.skills" :key="key">
+                        <input type="checkbox" :value="key" v-model="biography.stats.constitution.skills[key].isOwns">
+                        {{ key }}: {{ value.isOwns ? value.value + ownsBonus : value.value }}
+                    </li>
+                </ul>
             </label>
 
             <label for="stats.intelligence">
-                Intelligence
-                <input v-model="biography.stats.intelligence" type="number" name="stats.intelligence"
+                Intelligence {{ biography.stats.intelligence.modifier }}
+                <input v-model="biography.stats.intelligence.value" type="number" name="stats.intelligence"
                        id="stats.intelligence">
+                <ul>
+                    <li v-for="(value, key) in biography.stats.intelligence.skills" :key="key">
+                        <input type="checkbox" :value="key" v-model="biography.stats.intelligence.skills[key].isOwns">
+                        {{ key }}: {{ value.isOwns ? value.value + ownsBonus : value.value }}
+                    </li>
+                </ul>
             </label>
 
             <label for="stats.wisdom">
-                Wisdom
-                <input v-model="biography.stats.wisdom" type="number" name="stats.wisdom" id="stats.wisdom">
+                Wisdom {{ biography.stats.wisdom.modifier }}
+                <input v-model="biography.stats.wisdom.value" type="number" name="stats.wisdom" id="stats.wisdom">
+                <ul>
+                    <li v-for="(value, key) in biography.stats.wisdom.skills" :key="key">
+                        <input type="checkbox" :value="key" v-model="biography.stats.wisdom.skills[key].isOwns">
+                        {{ key }}: {{ value.isOwns ? value.value + ownsBonus : value.value }}
+                    </li>
+                </ul>
             </label>
 
             <label for="stats.charisma">
-                Charisma
-                <input v-model="biography.stats.charisma" type="number" name="stats.charisma" id="stats.charisma">
+                Charisma {{ biography.stats.charisma.modifier }}
+                <input v-model="biography.stats.charisma.value" type="number" name="stats.charisma" id="stats.charisma">
+                <ul>
+                    <li v-for="(value, key) in biography.stats.charisma.skills" :key="key">
+                        <input type="checkbox" :value="key" v-model="biography.stats.charisma.skills[key].isOwns">
+                        {{ key }}: {{ value.isOwns ? value.value + ownsBonus : value.value }}
+                    </li>
+                </ul>
             </label>
         </div>
 
@@ -153,6 +190,8 @@
 <script>
 import {getCharacterData} from '../../scripts/characterData.js';
 import biography from '../../scripts/biography.js';
+import calculateModifier from '../../scripts/calculateModifier.js';
+import axios from "axios";
 
 export default {
     name: "CreateCharacter",
@@ -162,6 +201,7 @@ export default {
             character: {},
             genders: '',
             classes: '',
+            ownsBonus: 2,
             biography: biography
         }
     },
@@ -177,6 +217,7 @@ export default {
         }
     },
     methods: {
+        calculateModifier,
         nextStage() {
             if (this.part === 1) {
                 this.character = {
@@ -188,15 +229,52 @@ export default {
             }
 
             if (this.part === 2) {
-                this.character.stats = this.biography.stats;
+                const characterStats = this.biography.stats;
+                const raceStats = this.getRaceData(this.character.race).data.stats;
+                for (const key in raceStats) {
+                    if (key in characterStats) {
+                        if(parseInt(raceStats[key]) > 0){
+                            characterStats[key].value += parseInt(raceStats[key]);
+                        }
+                    }
+                }
+                this.character.stats = characterStats;
+                setTimeout(() => {
+                    for (let stat in this.character.stats) {
+                        for (let skill in this.character.stats[stat].skills) {
+                            if (this.character.stats[stat].skills[skill].isOwns === true) {
+                                this.character.stats[stat].skills[skill].value += this.ownsBonus;
+                            }
+                        }
+                    }
+
+                    axios.post('/api/add-character', this.character)
+                        .then(() => {
+                            console.log('success')
+                            this.$store.dispatch('getCharacters')
+                            this.$router.push({name: 'user-characters'})
+                        })
+                }, 300)
                 this.part = 3;
             }
         },
         limitStatValue(stat) {
-            this.biography.stats[stat] = this.biography.stats[stat] < 2 ? 2 : this.biography.stats[stat] > 20 ? 20 : this.biography.stats[stat];
+            this.biography.stats[stat].modifier = calculateModifier(this.biography.stats[stat].value);
+            this.biography.stats[stat].value = this.biography.stats[stat].value < 2 ? 2 : this.biography.stats[stat].value > 20 ? 20 : this.biography.stats[stat].value;
+        },
+        updateSkills(stat, newModifier) {
+            for (const key in this.biography.stats[stat].skills) {
+                this.biography.stats[stat].skills[key].value = newModifier;
+            }
+        },
+        handleCheckboxChange(stat, skill) {
+            if (this.biography.stats[stat].skills[skill].isOwns) {
+                this.biography.stats[stat].skills[skill].value += this.ownsBonus;
+            } else {
+                this.biography.stats[stat].skills[skill].value -= this.ownsBonus;
+            }
         },
         getRaceData(race) {
-            console.log()
             return this.$store.state.races.find(r => r.code === race)
         }
     },
@@ -215,24 +293,42 @@ export default {
                 this.classes = this.$store.state.races.find(r => r.code === newRace).ch_classes
             }
         },
-        'biography.stats.strength': function () {
+        'biography.stats.strength.value': function () {
             this.limitStatValue('strength');
         },
-        'biography.stats.dexterity': function () {
+        'biography.stats.dexterity.value': function () {
             this.limitStatValue('dexterity');
         },
-        'biography.stats.constitution': function () {
+        'biography.stats.constitution.value': function () {
             this.limitStatValue('constitution');
         },
-        'biography.stats.intelligence': function () {
+        'biography.stats.intelligence.value': function () {
             this.limitStatValue('intelligence');
         },
-        'biography.stats.wisdom': function () {
+        'biography.stats.wisdom.value': function () {
             this.limitStatValue('wisdom');
         },
-        'biography.stats.charisma': function () {
+        'biography.stats.charisma.value': function () {
             this.limitStatValue('charisma');
-        }
+        },
+        'biography.stats.charisma.modifier': function (newModifier) {
+            this.updateSkills('charisma', newModifier);
+        },
+        'biography.stats.strength.modifier': function (newModifier) {
+            this.updateSkills('strength', newModifier);
+        },
+        'biography.stats.dexterity.modifier': function (newModifier) {
+            this.updateSkills('dexterity', newModifier);
+        },
+        'biography.stats.constitution.modifier': function (newModifier) {
+            this.updateSkills('constitution', newModifier);
+        },
+        'biography.stats.intelligence.modifier': function (newModifier) {
+            this.updateSkills('intelligence', newModifier);
+        },
+        'biography.stats.wisdom.modifier': function (newModifier) {
+            this.updateSkills('wisdom', newModifier);
+        },
     }
 }
 </script>
