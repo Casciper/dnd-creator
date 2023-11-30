@@ -12,8 +12,13 @@ const setUserInfo = (state, data) => {
     state.user.password = data.password;
 }
 
+const setRaces = (state, data) => {
+    state.races = data
+}
+
 export default {
     changeToken,
     changeAuthenticated,
-    setUserInfo
+    setUserInfo,
+    setRaces
 }

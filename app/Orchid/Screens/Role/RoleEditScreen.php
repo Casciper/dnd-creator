@@ -6,6 +6,8 @@ namespace App\Orchid\Screens\Role;
 
 use App\Orchid\Layouts\Role\RoleEditLayout;
 use App\Orchid\Layouts\Role\RolePermissionLayout;
+use Exception;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Orchid\Platform\Models\Role;
@@ -25,33 +27,31 @@ class RoleEditScreen extends Screen
     /**
      * Fetch data to be displayed on the screen.
      *
+     * @param Role $role
      *
      * @return array
      */
     public function query(Role $role): iterable
     {
         return [
-            'role'       => $role,
+            'role' => $role,
             'permission' => $role->getStatusPermission(),
         ];
     }
 
     /**
      * The name of the screen displayed in the header.
+     *
+     * @return string|null
      */
     public function name(): ?string
     {
-        return 'Edit Role';
+        return 'Manage roles';
     }
 
     /**
-     * Display header description.
+     * @return iterable|null
      */
-    public function description(): ?string
-    {
-        return 'Modify the privileges and permissions associated with a specific role.';
-    }
-
     public function permission(): ?iterable
     {
         return [
@@ -68,11 +68,11 @@ class RoleEditScreen extends Screen
     {
         return [
             Button::make(__('Save'))
-                ->icon('bs.check-circle')
+                ->icon('check')
                 ->method('save'),
 
             Button::make(__('Remove'))
-                ->icon('bs.trash3')
+                ->icon('trash')
                 ->method('remove')
                 ->canSee($this->role->exists),
         ];
@@ -101,7 +101,20 @@ class RoleEditScreen extends Screen
     }
 
     /**
-     * @return \Illuminate\Http\RedirectResponse
+     * Display header description.
+     *
+     * @return string|null
+     */
+    public function description(): ?string
+    {
+        return 'Access rights';
+    }
+
+    /**
+     * @param Request $request
+     * @param Role $role
+     *
+     * @return RedirectResponse
      */
     public function save(Request $request, Role $role)
     {
@@ -115,7 +128,7 @@ class RoleEditScreen extends Screen
         $role->fill($request->get('role'));
 
         $role->permissions = collect($request->get('permissions'))
-            ->map(fn ($value, $key) => [base64_decode($key) => $value])
+            ->map(fn($value, $key) => [base64_decode($key) => $value])
             ->collapse()
             ->toArray();
 
@@ -127,9 +140,11 @@ class RoleEditScreen extends Screen
     }
 
     /**
-     * @throws \Exception
+     * @param Role $role
      *
-     * @return \Illuminate\Http\RedirectResponse
+     * @return RedirectResponse
+     * @throws Exception
+     *
      */
     public function remove(Role $role)
     {

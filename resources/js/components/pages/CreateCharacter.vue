@@ -25,14 +25,14 @@
 
             <label for="gender">Gender
                 <select v-model="gender" name="gender" id="gender">
-                    <option v-for="gender in genders" :key="gender" :value="gender">{{ gender }}</option>
+                    <option v-for="gender in genders" :key="gender.id" :value="gender.code">{{ gender.name }}</option>
                 </select>
                 <span v-if="v$?.gender?.$error" class="error" id="gender_error">{{ this.errorRequired }}</span>
             </label>
 
             <label for="class">Class
                 <select v-model="chClass" name="class" id="class">
-                    <option v-for="chClass in classes" :key="chClass" :value="chClass">{{ chClass }}</option>
+                    <option v-for="chClass in classes" :key="chClass.id" :value="chClass.code">{{ chClass.name }}</option>
                 </select>
                 <span v-if="v$?.class?.$error" class="error" id="class_error">{{ this.errorRequired }}</span>
             </label>
@@ -137,7 +137,7 @@ export default {
             return this.$store.state.user
         },
         races() {
-            return dataJson.races
+            return this.$store.state.races
         },
     },
     methods: {
@@ -161,8 +161,8 @@ export default {
         },
         race(newRace, oldRace) {
             if (newRace) {
-                this.genders = dataJson.races.find(r => r.code === newRace).gender
-                this.classes = dataJson.races.find(r => r.code === newRace).class
+                this.genders = this.$store.state.races.find(r => r.code === newRace).genders
+                this.classes = this.$store.state.races.find(r => r.code === newRace).ch_classes
             }
 
         },

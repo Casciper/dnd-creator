@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AjaxController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,6 +14,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::post('/send-modal', [AjaxController::class, 'validateForm'])->name('validate.modals');
+
 Route::get('{any}', function () {
-    return view('welcome');
+    return view('layout');
 })->where('any','.*');

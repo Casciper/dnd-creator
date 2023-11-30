@@ -10,6 +10,7 @@ use App\Orchid\Layouts\User\UserListLayout;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Orchid\Platform\Models\User;
+use Orchid\Screen\Action;
 use Orchid\Screen\Actions\Link;
 use Orchid\Screen\Screen;
 use Orchid\Support\Facades\Layout;
@@ -34,20 +35,27 @@ class UserListScreen extends Screen
 
     /**
      * The name of the screen displayed in the header.
+     *
+     * @return string|null
      */
     public function name(): ?string
     {
-        return 'User Management';
+        return 'User';
     }
 
     /**
      * Display header description.
+     *
+     * @return string|null
      */
     public function description(): ?string
     {
-        return 'A comprehensive list of all registered users, including their profiles and privileges.';
+        return 'All registered users';
     }
 
+    /**
+     * @return iterable|null
+     */
     public function permission(): ?iterable
     {
         return [
@@ -58,14 +66,14 @@ class UserListScreen extends Screen
     /**
      * The screen's action buttons.
      *
-     * @return \Orchid\Screen\Action[]
+     * @return Action[]
      */
     public function commandBar(): iterable
     {
         return [
             Link::make(__('Add'))
-                ->icon('bs.plus-circle')
-                ->route('platform.systems.users.create'),
+                ->icon('plus')
+                ->route('platform.systems.users.create')->rawClick(),
         ];
     }
 
@@ -86,6 +94,8 @@ class UserListScreen extends Screen
     }
 
     /**
+     * @param User $user
+     *
      * @return array
      */
     public function asyncGetUser(User $user): iterable
@@ -95,6 +105,10 @@ class UserListScreen extends Screen
         ];
     }
 
+    /**
+     * @param Request $request
+     * @param User $user
+     */
     public function saveUser(Request $request, User $user): void
     {
         $request->validate([
@@ -109,6 +123,9 @@ class UserListScreen extends Screen
         Toast::info(__('User was saved.'));
     }
 
+    /**
+     * @param Request $request
+     */
     public function remove(Request $request): void
     {
         User::findOrFail($request->get('id'))->delete();

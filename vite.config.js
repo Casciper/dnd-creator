@@ -19,7 +19,7 @@ export default ({ mode }) => {
         plugins: [
             vue(),
             laravel({
-                input: ['resources/scss/app.scss', 'resources/js/app.js'],
+                input: ['resources/scss/app.scss', 'resources/scss/admin/app.scss', 'resources/js/app.js', 'resources/js/admin/app.js'],
                 refresh: true,
             }),
         ],

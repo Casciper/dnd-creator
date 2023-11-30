@@ -1,0 +1,13 @@
+.mobile-commandbar {
+    z-index: 9;
+    .commandbar-layout{
+        margin-bottom: 0!important;
+        border-top-left-radius: 0!important;
+        border-top-right-radius: 0!important;
+        padding: 10px 1.5rem!important;
+        h1{
+            position: relative;
+            bottom: 2px;
+        }
+    }
+}
