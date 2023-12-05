@@ -9,6 +9,7 @@ export default {
     skin: '',
     hair: '',
     race: '',
+    subRace: '',
     gender: '',
     chClass: '',
     story: '',

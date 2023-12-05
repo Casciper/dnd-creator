@@ -49,6 +49,12 @@
                 </select>
             </label>
 
+            <label v-if="biography.race && this.getRaceData(biography.race).data.race_types !== null" for="race">Sub race
+                <select v-model="biography.subRace" name="sub_race" id="sub_race">
+                    <option v-for="subRace in this.getRaceData(biography.race).data.race_types" :key="subRace.id" :value="subRace.code">{{ subRace.name }}</option>
+                </select>
+            </label>
+
             <label for="gender">Gender
                 <select v-model="biography.gender" name="gender" id="gender">
                     <option v-for="gender in genders" :key="gender.id" :value="gender.code">{{ gender.name }}</option>
@@ -92,11 +98,11 @@
         <div v-if="part === 2" id="part-2">
             ---------------------------------
             <label for="stats">Stats</label>
-            <div>choosen data:<br>
-                <span>race: {{ this.getRaceData(biography.race).name }}</span><br>
+            <div v-if="biography.race && biography.subRace && getSubRaceData(biography.race, biography.subRace) !== null">choosen data:<br>
+                <span>race: {{ getSubRaceData(biography.race, biography.subRace).name }}</span><br>
                 <span>race stats:</span><br>
                 <ul>
-                    <li v-for="(value, key) in this.getRaceData(biography.race).data.stats" :key="key">
+                    <li v-for="(value, key) in getSubRaceData(biography.race, biography.subRace).stats" :key="key">
                         {{ key }}: {{ value }}
                     </li>
                 </ul>
@@ -105,7 +111,19 @@
                 <span>origin: {{ biography.origin }}</span><br>
                 <span>name: {{ biography.name }}</span><br>
             </div>
-
+            <div v-else>
+                <span>race: {{ getRaceData(biography.race).name }}</span><br>
+                <span>race stats:</span><br>
+                <ul>
+                    <li v-for="(value, key) in getRaceData(biography.race).data.stats" :key="key">
+                        {{ key }}: {{ value }}
+                    </li>
+                </ul>
+                <span>gender: {{ biography.gender }}</span><br>
+                <span>class: {{ biography.chClass }}</span><br>
+                <span>origin: {{ biography.origin }}</span><br>
+                <span>name: {{ biography.name }}</span><br>
+            </div>
             <b>Complete to fill your stats by default after saving all features form race, gender and class will be
                 added to your character</b><br>
 
@@ -230,7 +248,14 @@ export default {
 
             if (this.part === 2) {
                 const characterStats = this.biography.stats;
-                const raceStats = this.getRaceData(this.character.race).data.stats;
+
+                let raceStats = this.getRaceData(this.character.race).data.stats;
+                if (biography.race && biography.subRace && this.getSubRaceData(biography.race, biography.subRace)) {
+                    raceStats = this.getSubRaceData(biography.race, biography.subRace).stats
+                } else {
+                    raceStats = this.getRaceData(this.character.race).data.stats
+                }
+
                 for (const key in raceStats) {
                     if (key in characterStats) {
                         if(parseInt(raceStats[key]) > 0){
@@ -248,12 +273,14 @@ export default {
                         }
                     }
 
-                    axios.post('/api/add-character', this.character)
+                    console.log(this.character)
+
+                    /*axios.post('/api/add-character', this.character)
                         .then(() => {
                             console.log('success')
                             this.$store.dispatch('getCharacters')
                             this.$router.push({name: 'user-characters'})
-                        })
+                        })*/
                 }, 300)
                 this.part = 3;
             }
@@ -276,6 +303,13 @@ export default {
         },
         getRaceData(race) {
             return this.$store.state.races.find(r => r.code === race)
+        },
+        getSubRaceData(race, subRace) {
+            const currentRace = this.getRaceData(race)
+            if (!currentRace.data.race_types) {
+                return null
+            }
+            return this.getRaceData(race).data.race_types.find(r => r.code === subRace)
         }
     },
     watch: {
